@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title>W02 Task 03</title>
+  </head>
+  <body>
+    <script src = "vec3.js"></script>
+    座標(x,y,z)を3点入力してください。3角形の面積を計算します。
+    <br>
+    <br>
+    1つ目の座標(x0,y0,z0)
+    <br>
+    <input type="number" id="input_x0" placeholder="x0">
+    <input type="number" id="input_y0" placeholder="y0">
+    <input type="number" id="input_z0" placeholder="z0">
+    <br>
+    2つ目の座標(x1,y1,z1)
+    <br>
+    <input type="number" id="input_x1" placeholder="x1">
+    <input type="number" id="input_y1" placeholder="y1">
+    <input type="number" id="input_z1" placeholder="z1">
+    <br>
+    3つ目の座標(x2,y2,z2)
+    <br>
+    <input type="number" id="input_x2" placeholder="x2">
+    <input type="number" id="input_y2" placeholder="y2">
+    <input type="number" id="input_z2" placeholder="z2">
+    <br>
+    <br>
+    <input type="submit" value="計算する" id="calc"/>
+    <input type="number" value="　　" id="result"/>
+
+    <script>
+      var click = document.getElementById("calc");
+      click.addEventListener('click',c);
+
+      function c()
+      {
+        var x0 = document.getElementById("input_x0").valueAsNumber;
+        var y0 = document.getElementById("input_y0").valueAsNumber;
+        var z0 = document.getElementById("input_z0").valueAsNumber;
+        var x1 = document.getElementById("input_x1").valueAsNumber;
+        var y1 = document.getElementById("input_y1").valueAsNumber;
+        var z1 = document.getElementById("input_z1").valueAsNumber;
+        var x2 = document.getElementById("input_x2").valueAsNumber;
+        var y2 = document.getElementById("input_y2").valueAsNumber;
+        var z2 = document.getElementById("input_z2").valueAsNumber;
+
+        var v0 = new Vec3(x0,y0,z0);
+        var v1 = new Vec3(x1,y1,z1);
+        var v2 = new Vec3(x2,y2,z2);
+        var S = AreaOfTriangle(v0,v1,v2);
+
+        document.getElementById("result").value = S
+      }
+    </script>
+  </body>
+</html>
