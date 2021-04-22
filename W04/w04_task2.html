@@ -7,18 +7,25 @@
 	<script>
    var padding = 10;
    var height = 30;
-	 var svg = d3.select("body").append("svg");
+	 var body = d3.select("body");
 	 d3.csv("https://214x112x-nakashima.github.io/InfoVis2021/W04/w04_task2.csv", draw );
 	 function draw(data){
-	     svg.selectAll("rect")
-		.data(data)
+	     body.selectAll("div")
+		     .data(data)
 	        .enter()
-	        .append("rect")
-	        .attr("x", padding)
+	        .append("div")
+          .append("svg")
+          .append("rect")
+          .attr("x", padding)
 	        .attr("y", function(d,i){ return padding + i * (height + padding); })
 	        .attr("width", function(d){ return d.data; })
           .attr("height", height)
           .style("fill", function(d){ return d.color;})
+      body.selectAll("div")//.selectAll("svg")
+         .data(data)
+           .append("span")
+           //.text(function(d){return d.label;})
+           .text(function(d){return d.color;})
 	 };
 	</script>
     </body>

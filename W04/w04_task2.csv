@@ -1,4 +1,4 @@
-data,color
-100,red
-50,blue
-80,green
+data,color,label
+100,red,Label1
+50,blue,Label2
+80,green,Label3
