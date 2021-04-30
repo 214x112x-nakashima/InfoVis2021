@@ -1,7 +1,7 @@
-d3.csv("https://214x112x-nakashima.github.io/InfoVis2021/W04/data.csv")
+d3.csv("https://214x112x-nakashima.github.io/InfoVis2021/W06/phisycal.csv")
     .then( data => {
         // Convert strings to numbers
-        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
+        data.forEach( d => { d.height = +d.height; d.weight = +d.weight; });
         ShowScatterPlot(data);
     })
     .catch( error => {
@@ -15,45 +15,44 @@ function ShowScatterPlot( data ) {
     var svg = d3.select("body").append("svg")
         .attr('width', width)
         .attr('height', height)
-        .append('g')
-  //      .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-    var xscale_m = d3.scaleLinear()
-        .domain( [d3.min(data, d => d.x), d3.max(data, d => d.x)] )
-        .range( [0, width - margin.left - margin.right ] );
+    var xscale_axis = d3.scaleLinear()
+        .domain([d3.min(data, d => d.height), d3.max(data, d => d.height)]) //140,190
+        .range( [0, width - margin.left - margin.right] );
 
-    var yscale_m = d3.scaleLinear()
-        .domain( [d3.min(data, d => d.y), d3.max(data, d => d.y)] )
-        .range( [0, height - margin.top - margin.bottom] );
+    var yscale_axis = d3.scaleLinear()
+        .domain([d3.min(data, d => d.weight), d3.max(data, d => d.weight)]) //40,65
+        .range( [0,height - margin.top - margin.bottom] );
 
     var xscale = d3.scaleLinear()
-        .domain( [d3.min(data, d => d.x), d3.max(data, d => d.x)] )
-        .range( [margin.left*2 , width - (margin.left*2) - (margin.right*2) ] );
+        .domain( [0, width - margin.left - margin.right] )
+        .range( [margin.left*2, width - (margin.left*2) - (margin.right*2) ] );
 
     var yscale = d3.scaleLinear()
-        .domain( [d3.min(data, d => d.y), d3.max(data, d => d.y)] )
+        .domain( [0,height - margin.top - margin.bottom] )
         .range( [margin.top*2, height - (margin.bottom*2) - (margin.top*2) ] );
 
-    var xaxis = d3.axisBottom( xscale_m )
+    var xaxis = d3.axisBottom( xscale_axis )
         .ticks(0);
 
-    var yaxis = d3.axisLeft( yscale_m )
+    var yaxis = d3.axisLeft( yscale_axis )
         .ticks(0);
 
     svg.append('g')
-        .attr('transform', `translate(${margin.left}, ${height - margin.bottom})`)
+        .attr('transform', `translate(${margin.left*2}, ${height - margin.bottom})`)
         .call( xaxis );
 
     svg.append('g')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('transform', `translate(${margin.left*2}, ${margin.top})`)
         .call( yaxis );
 
     svg.selectAll("circle")
         .data(data)
         .enter()
         .append("circle")
-        .attr('transform', `translate(${margin.left + margin.left}, ${margin.top+margin.top})`)
-        .attr("cx", d => xscale(d.x))
-        .attr("cy", d => yscale(d.y))
-        .attr("r", d => d.r);
+        .attr('transform', `translate(${margin.left*2}, ${margin.top})`)
+        .attr("cx", d => xscale(xscale_axis(d.height)))
+        .attr("cy", d => yscale(yscale_axis(d.weight)))
+        .attr("r", 10)
+        .attr("pointer-events",fill)
 };
