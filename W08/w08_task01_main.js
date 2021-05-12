@@ -1,4 +1,4 @@
-d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W08/food.csv")
+d3.csv("https://214x112x-nakashima.github.io/InfoVis2021/W08/food.csv")
     .then( data => {
         data.forEach( d => { d.value = +d.value; });
 
@@ -45,7 +45,7 @@ class BarChartPlot{
       self.xscale = d3.scaleLinear()
           .range( [0, self.inner_width] );
 
-      self.yscale = d3.scaleLinear()
+      self.yscale = d3.scaleBand()
           .range( [0, self.inner_height] )
           .paddingInner(0.1);
 
