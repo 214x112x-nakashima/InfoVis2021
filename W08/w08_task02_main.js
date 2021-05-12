@@ -34,15 +34,15 @@ class DrawingLine{
           .attr('width', self.config.width)
           .attr('height', self.config.height);
 
-      self.line = d3.line();
+      self.line = d3.line()
 
   }
 
   update() {
       let self = this;
 
-      self.line.x(d => d.x)
-      self.line.y(d => d.y)
+      self.line.x(d => d.x);
+      self.line.y(d => d.y);
 
       self.render();
   }
@@ -50,7 +50,7 @@ class DrawingLine{
   render() {
       let self = this;
 
-      self.chart.selectAll("path")
+      self.svg.selectAll("path")
           .data(self.data)
           .enter()
           .append("path")
