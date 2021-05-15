@@ -30,6 +30,8 @@ class PieChartPlot{
   init() {
       let self = this;
 
+      self.radius = Math.min( self.config.width, self.config.height ) / 2
+
       self.svg = d3.select( self.config.parent )
           .attr('width', self.config.width)
           .attr('height', self.config.height);
@@ -40,8 +42,14 @@ class PieChartPlot{
       self.pie = d3.pie()
 
       self.arc = d3.arc()
-          .innerRadius(0)
-          .outerRadius(Math.min( self.config.width, self.config.height ) / 2);
+          .innerRadius(self.radius - 70)
+          .outerRadius(self.radius);
+
+      self.text = d3.arc()
+          .innerRadius(self.radius - 30)
+          .outerRadius(self.radius - 30);
+
+
 
  }
 
@@ -49,7 +57,6 @@ class PieChartPlot{
       let self = this;
 
       self.pie.value( d => d.value );
-      //self.arc.outerRadius(self.config.radius);
 
       self.render();
   }
@@ -62,9 +69,21 @@ class PieChartPlot{
           .enter()
           .append("path")
           .attr("d", self.arc )
-          .attr("fill", 'black' )
+          .attr("fill", d => d.data.color)
           .attr("stroke", 'white' )
-          .style('stroke-width', '2px');
+          .style('stroke-width', '2px')
+
+      self.chart.selectAll("pie")
+          .data( self.pie(self.data) )
+          .enter()
+          .append("text")
+          .attr("fill","white")
+          .attr("transform",function(d) { return "translate(" + self.text.centroid(d) + ")"; })
+          .attr("dy","5px")
+          .attr("font","10px")
+          .attr("text-anchor","middle")
+          .text(d => d.data.label );
+
 
   }
 
