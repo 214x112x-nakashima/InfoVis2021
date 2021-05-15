@@ -42,12 +42,13 @@ class PieChartPlot{
       self.pie = d3.pie()
 
       self.arc = d3.arc()
-          .innerRadius(self.radius - 70)
+          .innerRadius(self.radius - 80)
           .outerRadius(self.radius);
 
       self.text = d3.arc()
           .innerRadius(self.radius - 30)
           .outerRadius(self.radius - 30);
+
 
 
 
@@ -77,11 +78,12 @@ class PieChartPlot{
           .data( self.pie(self.data) )
           .enter()
           .append("text")
-          .attr("fill","white")
+          .attr("fill","black")
           .attr("transform",function(d) { return "translate(" + self.text.centroid(d) + ")"; })
-          .attr("dy","5px")
+          .attr("dy","8px")
           .attr("font","10px")
           .attr("text-anchor","middle")
+          .style("font-weight","bold")
           .text(d => d.data.label );
 
 
