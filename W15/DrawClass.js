@@ -48,11 +48,12 @@ class DrawClass{
           //.enter()
           .join("path");
 
+
       prefs
          .attr("d", self.path)
          .style("stroke", "black")
          .style("stroke-width", 0.25)
-         .style("fill", "white");
+         .style("fill", d=>store(d.properties.pref_j));
 
       prefs
         .on('mouseover', (item,any) => {
@@ -77,6 +78,30 @@ class DrawClass{
 
   }
 
+
+}
+
+function store( input_pref ){
+
+  d3.csv("https://214x112x-nakashima.github.io/InfoVis2021/W15/store.csv")
+      .then( data =>{
+
+        for(var pref,seven,lawson,family,sum,max in data){
+          if(input_pref == pref){
+            if(max == seven){
+              return "red";
+            }else if (max == lawson) {
+              return "blue";
+            }else{
+              return "green";
+            }
+          }
+        }
+
+      })
+      .catch( error => {
+          console.log( error );
+      });
 
 }
 
