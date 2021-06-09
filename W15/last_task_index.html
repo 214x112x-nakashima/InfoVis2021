@@ -1,6 +1,15 @@
 <html>
     <head>
       <style>
+      body {
+          font-family: system-ui;
+      }
+      .container {
+          display: flex;
+      }
+      .bar.active {
+          stroke: #000;
+      }
       #tooltip {
          position: absolute;
          opacity: 0;
@@ -19,9 +28,12 @@
         <title>Last Task</title>
     </head>
     <body>
-    <svg id="tooltip"></svg>
+    <div id="tooltip"></div>
+    <div><svg id="drawing_region_prefplot"></svg></div>
+    <div><svg id="drawing_region_graphplot"></svg></div>
   	<script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="DrawClass.js"></script>
+    <script src="PlotGraph.js"></script>
    	<script src="last_task_main.js"></script>
     </body>
 </html>
