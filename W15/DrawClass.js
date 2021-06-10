@@ -1,6 +1,6 @@
 class DrawClass{
 
-  constructor( config, data ) {
+  constructor( config, data, data2 ) {
       this.config = {
           parent: config.parent, //body.svg
           width: config.width || 600,
@@ -9,6 +9,7 @@ class DrawClass{
           margin: config.margin || {top:10, right:10, bottom:10, left:10}
       }
       this.data = data;
+      this.data2 = data2;
       this.init();
   }
 
@@ -46,15 +47,17 @@ class DrawClass{
           .data(self.data.features)
           //.append("path")
           //.enter()
-          .join("path");
+          .join("path")
 
 
       prefs
-         .attr("d", self.path)
-         .style("stroke", "black")
-         .style("stroke-width", 0.25)
-         .style("fill", d=>store(d.properties.pref));
-         //.style("fill","white");
+        .data(self.data2)
+        .attr("d", self.path)
+        .attr("stroke", "black")
+        .attr("stroke-width", 0.25)
+        .attr("fill", d=>d.max);
+
+         //.style("fill""white");
 
       prefs
         .on('mouseover', (item,any) => {
@@ -87,8 +90,6 @@ function store( input_pref ){
   d3.csv("https://214x112x-nakashima.github.io/InfoVis2021/W15/store.csv")
       .then( data =>{
 
-        console.log("input=" + input_pref);
-
         for(let i=0;i<47;i++){
           console.log(data[i].pref);
 
@@ -97,12 +98,12 @@ function store( input_pref ){
               console.log("red");
               return "red";
             }else if (data[i].max == "lawson") {
-              console.log("blue");
               return "blue";
             }else{
               return "green";
             }
           }
+
         }
 
       })
