@@ -53,7 +53,8 @@ class DrawClass{
          .attr("d", self.path)
          .style("stroke", "black")
          .style("stroke-width", 0.25)
-         .style("fill", d=>store(d.properties.pref_j));
+         .style("fill", d=>store(d.properties.pref));
+         //.style("fill","white");
 
       prefs
         .on('mouseover', (item,any) => {
@@ -86,21 +87,28 @@ function store( input_pref ){
   d3.csv("https://214x112x-nakashima.github.io/InfoVis2021/W15/store.csv")
       .then( data =>{
 
-        for(var pref,seven,lawson,family,sum,max in data){
-          if(input_pref == pref){
-            if(max == seven){
+        for(let item = 0;item<47;item++){
+
+
+          console.log(item);
+
+          if(input_pref == "北海道"){
+            if(item.max == "seven"){
               return "red";
-            }else if (max == lawson) {
+            }else if (item.max == "lawson") {
               return "blue";
             }else{
               return "green";
             }
+          }else{
+            return "red";
           }
         }
 
       })
       .catch( error => {
           console.log( error );
+
       });
 
 }
