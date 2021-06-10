@@ -87,21 +87,21 @@ function store( input_pref ){
   d3.csv("https://214x112x-nakashima.github.io/InfoVis2021/W15/store.csv")
       .then( data =>{
 
-        for(let item = 0;item<47;item++){
+        console.log("input=" + input_pref);
 
+        for(let i=0;i<47;i++){
+          console.log(data[i].pref);
 
-          console.log(item);
-
-          if(input_pref == "北海道"){
-            if(item.max == "seven"){
+          if(input_pref == data[i].pref){
+            if(data[i].max == "seven"){
+              console.log("red");
               return "red";
-            }else if (item.max == "lawson") {
+            }else if (data[i].max == "lawson") {
+              console.log("blue");
               return "blue";
             }else{
               return "green";
             }
-          }else{
-            return "red";
           }
         }
 
