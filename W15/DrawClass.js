@@ -1,6 +1,6 @@
 class DrawClass{
 
-  constructor( config, data, data2 ) {
+  constructor( config, data ) {
       this.config = {
           parent: config.parent, //body.svg
           width: config.width || 600,
@@ -9,7 +9,6 @@ class DrawClass{
           margin: config.margin || {top:10, right:10, bottom:10, left:10}
       }
       this.data = data;
-      this.data2 = data2;
       this.init();
   }
 
@@ -47,24 +46,26 @@ class DrawClass{
           .data(self.data.features)
           //.append("path")
           //.enter()
-          .join("path")
+          .join("path");
 
 
       prefs
-        .data(self.data2)
-        .attr("d", self.path)
-        .attr("stroke", "black")
-        .attr("stroke-width", 0.25)
-        .attr("fill", d=>d.max);
-
+         .attr("d", self.path)
+         .style("stroke", "black")
+         .style("stroke-width", 0.25)
+         .attr("fill", d=>store(d.properties.pref))
          //.style("fill""white");
 
       prefs
         .on('mouseover', (item,any) => {
+
+          //let mise =  store(any.properties.pref);
+          //console.log(mise);
+
             d3.select('#tooltip')
                 .style('opacity', 1)
                 //.text(d);
-                .html(`<div class="tooltip-label">${any.properties.pref_j}</div>(150,150)`);
+                .html(`<div class="tooltip-label">${any.properties.pref_j}</div>`);
 
                 plotgraph();
         })
@@ -91,17 +92,13 @@ function store( input_pref ){
       .then( data =>{
 
         for(let i=0;i<47;i++){
-          console.log(data[i].pref);
 
           if(input_pref == data[i].pref){
-            if(data[i].max == "seven"){
-              console.log("red");
-              return "red";
-            }else if (data[i].max == "lawson") {
-              return "blue";
-            }else{
-              return "green";
-            }
+
+            console.log(data[i].max);
+
+            return data[i].max;
+
           }
 
         }
