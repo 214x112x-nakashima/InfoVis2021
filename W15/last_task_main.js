@@ -153,6 +153,7 @@ async function plot(input_pref,graph){
     input.label = ["seven","lawson","family"];
     input.value = [input_data["seven"],input_data["lawson"],input_data["family"]]
     input.color = ["red","blue","green"]
+    input.pref = input_pref;
 
     d3.select('#drawing_region_graphplot').remove();
     d3.select("#remove")

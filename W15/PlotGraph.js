@@ -58,6 +58,11 @@ class BarChart{
   render() {
       let self = this;
 
+      self.svg.append("text")
+          .attr("x",100)
+          .attr("y",240)
+          .text(self.data.pref);
+
       self.chart.append("rect")
           .attr("x",0)
           .attr("y",10)
