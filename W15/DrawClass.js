@@ -29,6 +29,9 @@ class DrawClass{
 
       self.path = d3.geoPath().projection(self.projection);
 
+      self.color = store();
+      console.log(self.color);
+
   }
 
   update() {
@@ -46,22 +49,33 @@ class DrawClass{
           .data(self.data.features)
           //.append("path")
           //.enter()
-          .join("path");
+          .join("path")
+          .attr("id",d=>d.properties.pref);
+
+      let key = document.getElementsByClassName('id');
+      console.log(key);
 
 
       prefs
          .attr("d", self.path)
          .style("stroke", "black")
          .style("stroke-width", 0.25)
-         .attr("fill", d=>store(d.properties.pref))
+         .style("fill", "white");
          //.style("fill""white");
+
+     prefs
+        .style("fill",function(d){
+      //let color = store(d.properties.pref)
+      //console.log(d.properties.pref);
+      //console.log(color)
+      return "white"
+    })
 
       prefs
         .on('mouseover', (item,any) => {
 
           //let mise =  store(any.properties.pref);
           //console.log(mise);
-
             d3.select('#tooltip')
                 .style('opacity', 1)
                 //.text(d);
@@ -86,29 +100,29 @@ class DrawClass{
 
 }
 
-function store( input_pref ){
+function store(){
 
   d3.csv("https://214x112x-nakashima.github.io/InfoVis2021/W15/store.csv")
       .then( data =>{
 
+        var color = new Array();
+
         for(let i=0;i<47;i++){
+          color[data[i].pref] = data[i].max;
+      };
 
-          if(input_pref == data[i].pref){
-
-            console.log(data[i].max);
-
-            return data[i].max;
-
-          }
-
-        }
+        return new Promise(function (resolve,reject){
+          setTimeout(function(){
+            resolve('成功');
+            //reject('失敗')
+          },3000)
+        })
 
       })
       .catch( error => {
           console.log( error );
 
       });
-
 }
 
 

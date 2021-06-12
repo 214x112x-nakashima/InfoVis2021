@@ -7,6 +7,7 @@ class BarChartClass{
           height: config.height || 128,
           margin: config.margin || {top:10, right:10, bottom:10, left:10}
       }
+
       this.data = data;
       this.init();
   }
@@ -47,7 +48,7 @@ class BarChartClass{
   update() {
       let self = this;
 
-      const xmax = d3.max( self.data, d => d.value );
+      const xmax = d3.max( self.data,d=>d.value);
       self.xscale.domain( [0, xmax] );
 
       self.yscale.domain( self.data.map(d => d.label) );

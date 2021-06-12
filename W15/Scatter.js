@@ -1,10 +1,10 @@
-class BarChart{
+class GraphPlot{
 
   constructor( config, data ) {
       this.config = {
           parent: config.parent,
           width: config.width || 256,
-          height: config.height || 128,
+          height: config.height || 2048,
           margin: config.margin || {top:10, right:10, bottom:10, left:10}
       }
       this.data = data;
@@ -32,7 +32,7 @@ class BarChart{
           .paddingInner(0.1);
 
       self.xaxis = d3.axisBottom( self.xscale )
-          .ticks(8)
+          .ticks(5)
           .tickSizeOuter(0);
 
       self.yaxis = d3.axisLeft( self.yscale )
@@ -48,7 +48,7 @@ class BarChart{
       let self = this;
 
       var xmax = d3.max( self.data.value );
-      self.xscale.domain( [0, xmax+20] );
+      self.xscale.domain( [0, 1500] );
 
       self.yscale.domain( self.data.map(d => d.label) );
 
@@ -58,27 +58,15 @@ class BarChart{
   render() {
       let self = this;
 
-      self.chart.append("rect")
-          .attr("x",0)
-          .attr("y",10)
-          .attr("width",self.xscale(self.data.value[0]))
-          .attr("height", self.yscale.bandwidth()/3)
-          .attr("fill",self.data.color[0])
-
-      self.chart.append("rect")
-          .attr("x",0)
-          .attr("y",70)
-          .attr("width",self.xscale(self.data.value[1]))
-          .attr("height", self.yscale.bandwidth()/3)
-          .attr("fill",self.data.color[1]);
-
-      self.chart.append("rect")
-          .attr("x",0)
-          .attr("y",130)
-          .attr("width",self.xscale(self.data.value[2]))
-          .attr("height", self.yscale.bandwidth()/3)
-          .attr("fill",self.data.color[2]);
-
+      self.chart.selectAll("rect")
+          .data(self.data)
+          .join("rect")
+          .transition().duration(1000)
+          .attr("x", 0 )
+          .attr("y", d => self.yscale( d.label ) )
+          .attr("width", d => self.xscale( d.value ) )
+          .attr("height", self.yscale.bandwidth())
+          .attr("fill", d => d.color)
 
       self.xaxis_group
           .call( self.xaxis );
@@ -88,5 +76,7 @@ class BarChart{
 
 
   }
+
+
 
 }
